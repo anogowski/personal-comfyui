@@ -3,6 +3,36 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Archives
+*.zip
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.rar
+*.7z
+*.tar
+*.gz
+*.bz2
+*.xz
+*.db*
+*.sqlite3*
+
+# Model Files
+*.h5
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+
+# Directories
+models/
+temp/
+output/
+outputs/
+input/
+inputs/
+user/__manager/
+
 # C extensions
 *.so
 
