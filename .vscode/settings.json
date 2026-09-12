@@ -1,0 +1,37 @@
+{
+    "tabstronaut.autoCloseOnRestore": true,
+    "workbench.editor.pinnedTabsOnSeparateRow": true,
+
+    // 1. Point VS Code directly to the virtual environment inside the Docker container
+    "python.defaultInterpreterPath": "./mnt/venv/bin/python",
+
+    // 2. Tell the Python extension where the venv directory is located
+    "python.venvPath": "./mnt",
+
+    // 3. Ensure Ty and tools can seamlessly index the ComfyUI root and venv site-packages
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}",
+        "./mnt/venv/lib/python3.12/site-packages" 
+    ],
+
+    // 4. Integrated Terminal inherits the active virtual environment automatically
+    "python.terminal.activateEnvInTerminal": true,
+
+    // 5. Apply your optimized Ruff configuration for linting and formatting
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.insertSpaces": false,   // Use actual tabs instead of spaces
+        "editor.tabSize": 4,            // Set the visual width of a tab to 4 spaces
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+        }
+    },
+
+    // 6. Disable Pylance entirely so Astral's Ty manages the language services
+    "python.languageServer": "None",
+
+    // 7. Explicit Ty interpreter path inside the Docker container environment
+    "ty.interpreter": "./mnt/venv/bin/python"
+}

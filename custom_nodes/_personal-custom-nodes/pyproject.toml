@@ -15,3 +15,6 @@ dependencies = [
 [tool.setuptools]
 packages = ["personal-custom-nodes"]
 package-dir = { "_personal-custom-nodes" = "." }
+
+[format]
+indent-style = "tab"
