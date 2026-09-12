@@ -1,0 +1,16 @@
+numpy
+Pillow>=9.1
+PyOpenGL-accelerate
+opencv-python-headless
+xformers
+einops
+sageattention
+triton
+timm
+scikit-image
+scipy
+transformers
+tokenizers
+accelerate
+sentencepiece
+protobuf

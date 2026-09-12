@@ -1,0 +1,5 @@
+Records of installed view extensions, one JSON file per package.
+
+Delete one and restart ComfyUI to install that extension again. Each record lists the
+files it installed, and those are checked before the extension is skipped, so updating
+WAS Node Suite, which replaces its own directory, causes a reinstall on its own.

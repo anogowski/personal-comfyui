@@ -1,0 +1,12 @@
+{
+    "Comfy.InstalledVersion": "1.51.10",
+    "Comfy.TutorialCompleted": true,
+    "Comfy.Templates.SortBy": "popular",
+    "Comfy.RightSidePanel.IsOpen": true,
+    "Comfy.Toast.DisableReconnectingToast": true,
+    "Comfy.Queue.History.Expanded": true,
+    "Comfy.VueNodes.Enabled": false,
+    "Comfy.LinkRenderMode": 2,
+    "Comfy.Minimap.Visible": false,
+    "Comfy.Minimap.NodeColors": true
+}

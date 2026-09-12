@@ -1,0 +1,81 @@
+Content Viewer, view extensions
+================================
+
+A view extension teaches the Content Viewer a content type it does not already know: a
+.js view for the browser, and usually a Python parser that decides which content the view
+claims. WAS Node Suite ships twelve views built in; this directory is for adding more.
+
+Extensions live at https://github.com/WASasquatch?tab=repositories, the ones whose names
+begin ComfyUI_Viewer_ are view extensions.
+
+
+Installing one by hand, works right now, nothing to turn on
+------------------------------------------------------------
+
+Copy two files out of the extension into WAS Node Suite:
+
+    web/views/<name>.js                 ->  <pack>/web/viewer/views/
+    modules/parsers/<name>_parser.py    ->  <pack>/modules/viewer/parsers/
+
+where <pack> is ComfyUI/custom_nodes/was-node-suite-comfyui. If the extension has a
+routes/ directory, its files go in <pack>/modules/viewer/routes/, and an apps/ directory
+goes in <pack>/modules/viewer/apps/. The contents of a nodes/ directory go in
+
+    <pack>/modules/viewer/extension_nodes/<extension name>/
+
+in a directory of its own, so two extensions cannot collide on a file name. Leave that
+directory's own __init__.py behind if it has one: each node module is imported on its own
+here, and the automatic route drops the file for the same reason.
+
+Restart ComfyUI. The view registers itself; there is no list to edit.
+
+If the extension ships a requirements.txt, install it yourself with the Python that runs
+ComfyUI. For the Windows portable build, from the ComfyUI_windows_portable directory:
+
+    python_embeded\python.exe -m pip install -r <extension>\requirements.txt
+
+
+Installing one automatically, opt in first
+-------------------------------------------
+
+Put this in your config.yaml:
+
+    viewer:
+      install_extensions: true
+
+Then drop the extension's .zip in THIS directory and restart ComfyUI. It is unpacked to
+the right places, its requirements are installed with the Python that runs ComfyUI, and a
+record is written to logs/ so it is not installed twice. Delete a record to reinstall.
+
+It is off by default. With it on, a file you downloaded decides what gets pip-installed
+into your ComfyUI. Nothing else in WAS Node Suite installs anything without being asked. Everything the installer does is written to the ComfyUI log, including the
+pip command.
+
+
+A note on extension nodes
+-------------------------
+
+Some extensions also ship a nodes/ directory of ComfyUI nodes. Those are installed and
+registered by either route, and appear in the node menu after a restart like any other
+node. An extension cloned into custom_nodes as ComfyUI_Viewer_<name> and carrying its own
+top-level __init__.py is loaded by ComfyUI as a node pack in its own right, so its nodes
+arrive that way and nothing is copied. A clone without one cannot be imported by ComfyUI,
+so its nodes are copied in on the same pass as its views.
+
+They are registered only while the viewer is on. With
+
+    features:
+      viewer: false
+
+in config.yaml, the viewer and every extension node are left out, and the standalone
+ComfyUI_Viewer pack is free to provide them instead. Saved workflows are unaffected
+either way.
+
+A node id that something else already provides, ComfyUI itself or another pack, is left
+with its current owner. The extension's node is skipped and the clash is written to the
+ComfyUI log, naming the id and the extension.
+
+
+Full documentation
+------------------
+

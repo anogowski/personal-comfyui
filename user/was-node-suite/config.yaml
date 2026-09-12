@@ -1,0 +1,88 @@
+# WAS Node Suite, the configuration schema.
+#
+# THIS IS THE TEMPLATE, NOT YOUR CONFIG FILE. Editing it changes nothing. Your own copy is
+# written on first start at <ComfyUI user dir>/was-node-suite/config.yaml, and is brought up
+# to date from this file on each release, keeping the values you have set.
+#
+# docs/CONFIG.md is the reference for every key below.
+
+version: 14
+
+logging:
+  level: info            # debug | info | warning | error
+  rich: true             # colourised output when rich is installed
+  quotes: false          # accepted and has no effect
+
+paths:
+  wildcards: null        # directory of wildcard .txt files; null -> <user_dir>/was-node-suite/wildcards
+  styles: null           # styles .json, or an A1111 styles .csv; null -> <user_dir>/was-node-suite/styles.json
+  luts: null             # directory of .cube LUTs; null -> <user_dir>/was-node-suite/luts
+  allow_read: []         # extra readable directories, e.g. ["D:/datasets/prompts"]
+  allow_write: []        # extra writable directories, e.g. ["D:/renders"]
+
+text:
+  strip_comments: true   # reserved; comment handling does not read it. See docs/CONFIG.md
+
+document:
+  clean_html: true       # remove script, frame and event markup from emitted HTML
+
+history:
+  display_limit: 36      # how many recent entries the History nodes list
+
+video:
+  extra_codecs: {}       # extra muxer -> container pairs, e.g. {avc1: .mp4, h264: .mkv}
+
+interface:
+  preview_max_edge: 1024 # longest edge of a picture a node publishes to its own panel; 0 keeps full size
+
+viewer:
+  install_extensions: false  # unpack .zip view extensions and pip-install what they require
+
+dependencies:
+  install_missing: false # install a switched-on group's requirements file at startup. Off, so a
+                         # fresh install brings in nothing: the packages and the command that
+                         # installs them are named in the log instead. On, it only ever adds:
+                         # a plan that would replace an installed version is refused and printed
+
+features:                # optional node groups
+  extras:      true      # 27 nodes: LUTs, tiling, LoRA merging, sequence samplers, latent upscalers
+  viewer:       true     #  2 nodes: Content Viewer and its canvas helper
+  blip:         true     #  2 nodes: BLIP captioning and visual question answering
+  clipseg:      true     #  3 nodes: CLIPSeg text-prompted masking
+  sam:          true     #  4 nodes: Segment Anything masking
+  midas:        true     #  2 nodes: MiDaS depth approximation and its model loader
+  diffusers:    true     #  2 nodes: diffusers-format checkpoint loaders
+  yunet:        true     #  2 nodes: YuNet face detection. Weights ship with the pack
+  preprocessors: true    #  4 nodes: Power Preprocessor, HDR Reconstruct, Image Remove Background
+                         #           and its model loader. Every answer runs in torch on weights
+                         #           the pack publishes
+  threejs:     true      # 43 nodes: build a Three.js scene on the canvas and render it in
+                         #           the browser. Three.js ships with the pack, and the browser
+                         #           fetches it only when a scene runs
+  document_export: false #  0 nodes: lets Save DOC write .docx, .odt and .pdf. The only group
+                         #           whose packages ComfyUI does not already require, so it
+                         #           starts off and nothing is installed for a fresh install
+                         #           pip install -r requirements/document_export.txt
+  network:     false     #  4 nodes: nodes that make outbound requests
+                         #           The (ComfyUI Native) node beside each loads either way
+  pssr:        false     #  1 node:  PS-SR video super resolution. Needs a 22 GB checkout
+                         #           placed by hand, and diffsynth; see docs/MODELS.md
+
+                         # extras and viewer are the nodes of two other WAS packs. Set either
+                         # to false to run the standalone pack instead.
+
+legacy:                  # nodes another node does better
+  loaders:     true      # 5 nodes:  loaders that also answer the file name as a string
+  switches:    true      # 11 nodes: one typed switch per socket type
+  text_type:   true      # 2 nodes:  passthroughs between text sockets, which are all STRING
+  core_dupes:  true      # 3 nodes:  superseded one-for-one by a core ComfyUI node
+  sampling:    true      # 1 node:   KSampler (Seed Socket)
+  cache:       false     # 2 nodes:  Cache Node, Load Cache
+  debug:       false     # 2 nodes:  Export API, Samples Passthrough
+  dupes:       false     # 1 node:   CLIPSeg Tiled Masking
+  superseded:  false     # 1 node:   MiDaS Mask Image
+
+nodes:                   # per-node overrides; these beat both blocks above
+  enable: []             # e.g. ["KSampler (WAS)", "Cache Node"]
+  disable: []            # e.g. ["Image Send HTTP"]
+                         # Names are node ids
